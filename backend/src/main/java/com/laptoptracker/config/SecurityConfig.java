@@ -24,10 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-/**
- * Security Configuration
- * Configures Spring Security with JWT authentication
- */
+// v2 - CORS fix
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -42,17 +39,11 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    /**
-     * Password encoder bean
-     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    /**
-     * Authentication provider
-     */
     @Bean
     public DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -61,23 +52,16 @@ public class SecurityConfig {
         return authProvider;
     }
 
-    /**
-     * Authentication manager bean
-     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
         return authConfig.getAuthenticationManager();
     }
 
-    /**
-     * CORS configuration
-     * Uses setAllowedOriginPatterns to support wildcard Vercel preview URLs
-     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
 
-        // ✅ setAllowedOriginPatterns supports wildcards (setAllowedOrigins does NOT)
+        // ✅ setAllowedOriginPatterns supports wildcards
         configuration.setAllowedOriginPatterns(Arrays.asList(
             "http://localhost:3000",
             "http://localhost:5173",
@@ -100,9 +84,6 @@ public class SecurityConfig {
         return source;
     }
 
-    /**
-     * Security filter chain
-     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -116,7 +97,7 @@ public class SecurityConfig {
                 .contentSecurityPolicy(csp -> csp
                     .policyDirectives("default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' data:; connect-src 'self' https:; frame-ancestors 'none'")))
             .authorizeHttpRequests(auth -> auth
-                // ✅ Allow OPTIONS preflight requests through first
+                // ✅ Allow OPTIONS preflight requests
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 // Public endpoints
                 .requestMatchers("/auth/**").permitAll()
