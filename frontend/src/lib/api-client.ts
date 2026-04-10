@@ -40,17 +40,15 @@ const API_BASE_URL = (() => {
   return envUrl;
 })();
 
-// Create axios instance with security headers
+// Create axios instance
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
-    // Prevent XSS attacks
-    "X-Content-Type-Options": "nosniff",
   },
   // Prevent CSRF attacks
   withCredentials: true,
-  timeout: 30000,
+  timeout: 60000,
 });
 
 /**
