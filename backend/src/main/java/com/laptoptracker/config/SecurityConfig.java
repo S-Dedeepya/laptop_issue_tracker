@@ -79,7 +79,8 @@ public class SecurityConfig {
             "http://localhost:5173",
             "http://localhost:5174",
             "http://localhost:5175",
-            "https://laptop-issue-tracker.vercel.app"
+            "https://laptop-issue-tracker.vercel.app",
+            "https://laptop-issue-tracker-*.vercel.app"
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
