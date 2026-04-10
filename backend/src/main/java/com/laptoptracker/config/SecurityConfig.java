@@ -19,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-// v3 - removed Spring CORS, handled by CorsFilter
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -64,8 +63,6 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/public/**").permitAll()
-                .requestMatchers("/health").permitAll()
                 .requestMatchers("/student/**").hasRole("STUDENT")
                 .requestMatchers("/manager/**").hasRole("MANAGER")
                 .anyRequest().authenticated()
