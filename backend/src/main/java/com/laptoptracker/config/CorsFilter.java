@@ -18,7 +18,7 @@ public class CorsFilter implements Filter {
         Pattern.compile("^https://laptop-issue-tracker-.*\\.vercel\\.app$");
 
     private static final String ALLOWED_HEADERS =
-        "Origin, Content-Type, Accept, Authorization, X-Requested-With";
+        "Origin, Content-Type, Accept, Authorization, X-Requested-With, content-type, *";
 
     private static final String ALLOWED_METHODS = "GET, POST, PUT, DELETE, PATCH, OPTIONS";
 
